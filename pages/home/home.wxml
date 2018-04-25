@@ -1,0 +1,20 @@
+<!--pages/home/home.wxml-->
+<view>
+  <image class='music_bg' src='../../image/music.jpeg' mode='aspectFill'></image>
+  <view class='content'>
+    
+  </view>
+  <view class='control'>
+    <view class='weui-flex' style='flex-direction:row;'>
+      <view class='weui-flex__item'>
+        <image class='control_btn' src='../../image/repeat.png'></image>
+      </view>
+      <view class='weui-flex__item'>
+         <image class='control_btn' src='../../image/play.png'></image>
+      </view>
+      <view class='weui-flex__item'>
+        <image class='control_btn' src='../../image/clock.png'></image>
+      </view>
+    </view>
+  </view>
+</view>

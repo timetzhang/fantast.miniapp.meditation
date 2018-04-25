@@ -1,0 +1,37 @@
+/* pages/home/home.wxss */
+.content{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center; 
+}
+.music_bg{
+  position: fixed;
+  height:100%;
+  width: 100%;
+  filter:blur(20px);
+  z-index: -1;
+}
+.control{
+  position: fixed;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
+  background-color: black;
+  opacity: 0.8;
+}
+
+.weui-flex__item{
+  display: flex;
+  height: 60px;
+  line-height: 60px;
+  align-items: center;
+  justify-content: center;
+}
+
+.control_btn{
+  width: 32px;
+  height:32px;
+  filter: invert(100%);
+}
