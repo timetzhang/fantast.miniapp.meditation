@@ -1,19 +1,21 @@
 <!--pages/home/home.wxml-->
 <view>
-  <image class='music_bg' src='../../image/music.jpeg' mode='aspectFill'></image>
+  <image class='music_bg' src='../../images/music.jpeg' mode='aspectFill'></image>
   <view class='content'>
-    
+    <swiper indicator-dots=''>
+
+    </swiper>
   </view>
   <view class='control'>
     <view class='weui-flex' style='flex-direction:row;'>
       <view class='weui-flex__item'>
-        <image class='control_btn' src='../../image/repeat.png'></image>
+        <image class='control_btn' src='../../images/repeat.png'></image>
       </view>
       <view class='weui-flex__item'>
-         <image class='control_btn' src='../../image/play.png'></image>
+         <image class='control_btn' src='../../images/play.png'></image>
       </view>
       <view class='weui-flex__item'>
-        <image class='control_btn' src='../../image/clock.png'></image>
+        <image class='control_btn' src='../../images/clock.png'></image>
       </view>
     </view>
   </view>
