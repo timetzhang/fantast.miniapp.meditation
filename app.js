@@ -43,6 +43,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    backgroundAudioManager: wx.getBackgroundAudioManager(),
+    currentMusicInfo: {},
   }
 })
