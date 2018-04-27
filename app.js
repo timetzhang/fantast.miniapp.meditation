@@ -5,7 +5,16 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
+    wx.startWifi({
+      success: function (res) {
+        console.log(res.errMsg)
+      }
+    });
+    wx.getConnectedWifi({
+      success: function (res) {
+        console.log(res);
+      }
+    })
     // 登录
     wx.login({
       success: res => {

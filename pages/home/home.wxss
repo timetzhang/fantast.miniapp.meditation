@@ -3,14 +3,24 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  display: flex;
-  align-items: center; 
 }
+.cover_view{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cover{
+  width:70%;
+  height: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .music_bg{
   position: fixed;
   height:100%;
   width: 100%;
-  filter:blur(20px);
+  filter:blur(20px) brightness(0.70);
   z-index: -1;
 }
 .control{
@@ -25,11 +35,13 @@
 .weui-flex__item{
   display: flex;
   height: 60px;
-  line-height: 60px;
   align-items: center;
   justify-content: center;
 }
-
+.control_item{
+  height:32px;
+  padding: 14px 20px;
+}
 .control_btn{
   width: 32px;
   height:32px;
