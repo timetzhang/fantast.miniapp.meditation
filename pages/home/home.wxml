@@ -1,16 +1,40 @@
 <!--pages/home/home.wxml-->
 <view>
-  <image class='music_bg' src='{{bgImg}}' mode='aspectFill'></image>
+  <!--<image class='music_bg' src='{{bgImg}}'></image>-->
+  
   <view class='content'>
-    <view style='text-align:center;margin-top:15%;;'>{{typeTitle}}</view>
-    <swiper style='width:100%;height:60%;' bindchange='changeMusic'>
-      <block wx:for='{{musicData}}' wx:key="{{item.id}}">
-        <swiper-item class='cover_view'>
-          <image class='cover' src='{{item.image}}'></image>
+    
+    <swiper class="select_name" current='{{currentName}}' display-multiple-items='1' circular='true' bindchange='selectName'>
+      <block wx:for='{{musicData}}' wx:key='{{item.id}}'>
+        <swiper-item class="select_name_item">
+          <view>{{item.name}}</view>
         </swiper-item>
       </block>
     </swiper>
+    <swiper class='select_music' bindchange='changeMusic' circular='true' current='{{current}}'>
+      <block wx:for='{{musicData}}' wx:key='{{item.id}}'>
+        <swiper-item class="select_music_bgimg" style="background-image:url({{item.image}})">
+          
+        </swiper-item>
+      </block>
+    </swiper>
+    
+    <!--
+    <swiper style='width:100%;height:18%;' bindchange='changeMusic' display-multiple-items="3" circular='true'>
+      <block wx:for='{{musicData}}' wx:key="{{item.id}}">
+        <swiper-item class='cover_view'>
+          <text>{{item.name}}</text>
+        </swiper-item>
+      </block>
+    </swiper>
+    -->
   </view>
+  <view class="play_control {{paused ? 'playbtn':'pausedbtn'}}">
+    <image class='paused_icon' mode="widthFix" src='{{playStatusImage}}'  bindtap='playMusic'></image>
+    <view>30:00</view>
+  </view>
+  
+  <!--
   <view class='control'>
     <view class='weui-flex' style='flex-direction:row;'>
       <view class='weui-flex__item'>
@@ -19,15 +43,19 @@
         </view>
       </view>
       <view class='weui-flex__item'>
+      
         <view class='control_item' bindtap='playMusic'>
           <image class='control_btn' src='{{playStatusImage}}'></image>
         </view>
+        
       </view>
       <view class='weui-flex__item'>
-        <view class='control_item' bindtap=''>
+        <view class='control_item' bindtap='selectClock'>
           <image class='control_btn' src='../../images/clock.png'></image>
         </view>
       </view>
     </view>
+    
   </view>
+  -->
 </view>

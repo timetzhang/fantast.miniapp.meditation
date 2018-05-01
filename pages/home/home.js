@@ -9,9 +9,9 @@ Page({
     musicData:[],
     bgImg:'',
     typeTitle:'',
+    currentName:'0',
     current:0,
-    paused:globalBgAudioManager.paused,
-    playStatus:true,
+    paused:true,
     playStatusImage:'../../images/play.png',
     repeatStatus:true,
     repeatStatusImage:'../../images/repeat.png',
@@ -23,16 +23,6 @@ Page({
   onLoad: function (options) {
     var that = this;
     this.initBgAudioListManager();
-    if (JSON.stringify(currentMusicInfo) != '{}'){
-      console.log(currentMusicInfo);
-      this.changeContentView(currentMusicInfo.image, currentMusicInfo.name, currentMusicInfo.id)
-    }
-    if(this.data.paused){
-      playStatusImage = '../../images/play.png';
-      globalBgAudioManager.pause();
-    }else{
-
-    }
     wx.request({
       url: 'https://www.zhangtt.cn/meditation/getscenes',
       data:{},
@@ -48,14 +38,6 @@ Page({
     })
   },
   /**
-   * 获取当前播放音频
-   */
-  getcurrentAudio:function(){
-    if(globalBgAudioManager.name != currentMusicInfo.name){
-      
-    }
-  },
-  /**
    * 初始化播放器
    */
   initBgAudioListManager:function(){
@@ -66,14 +48,26 @@ Page({
     };
   },
   /**
+   * 通过名字来切换
+   */
+  selectName:function(event){
+    var index = event.detail.current;
+    globalBgAudioManager.pause();
+    this.setData({
+      playStatusImage: '../../images/play.png',
+      current: index
+    })
+    this.changeContentView(this.data.musicData[index].image, this.data.musicData[index].name, '')
+  },
+  /**
    * 切换音乐
    */
   changeMusic:function(event){
-    this.data.current = event.detail.current;
-    var index = this.data.current;
+    var index = event.detail.current;
     globalBgAudioManager.pause();
     this.setData({
-      playStatusImage: '../../images/play.png'
+      playStatusImage: '../../images/play.png',
+      currentName: index
     })
     this.changeContentView(this.data.musicData[index].image, this.data.musicData[index].name,'')
   },
@@ -90,44 +84,40 @@ Page({
         current: current
       })
     }
+    //console.log(this.data.current)
   },
   /**
    * 播放或者暂停播放
    */
   playMusic: function () {
-    var that = this;
-    var playStatusImage = '';
-    
-    if (this.data.playStatus){
-      playStatusImage = '../../images/pause.png';
-      //console.log(musicData[0].music)
-      this.playTargetMusic(1);
-    }else{
-      playStatusImage = '../../images/play.png';
-      this.playTargetMusic(0);
-    }
-    this.data.playStatus = !this.data.playStatus;
-    that.setData({
-      playStatusImage: playStatusImage
-    })
+    var status = this.data.paused
+    this.playTargetMusic(status);
   }, 
   /**
    * 播放目标音乐
    */
   playTargetMusic:function(status){
+    var playStatusImage = ''
     const musicInfo = this.data.musicData[this.data.current]
     if (musicInfo.id != currentMusicInfo.id){
       globalBgAudioManager.title = musicInfo.name
       globalBgAudioManager.epname = musicInfo.name
-      globalBgAudioManager.singer = 'TT'
+      globalBgAudioManager.singer = musicInfo.composer
       globalBgAudioManager.coverImgUrl = musicInfo.image
       globalBgAudioManager.src = musicInfo.music
     }
-    if(status == 1){
+    if(status){
+      playStatusImage = '../../images/pause.png';
       globalBgAudioManager.play()
     }else{
+      playStatusImage = '../../images/play.png';
       globalBgAudioManager.pause()
     }
+    this.setData({
+      paused: !status,
+      playStatusImage: playStatusImage
+    })
+    console.log(globalBgAudioManager.duration())
     this.recordCurrentAudioInfo(musicInfo);
   },
   /**
@@ -135,7 +125,7 @@ Page({
    */
   recordCurrentAudioInfo(musicInfo){
     currentMusicInfo = musicInfo;
-    console.log(currentMusicInfo);
+    //console.log(currentMusicInfo);
   },
   /**
    * 循环状态
@@ -152,7 +142,6 @@ Page({
     that.setData({
       repeatStatusImage: repeatStatusImage
     })
-    console.log(this.data.repeatStatusImage)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -165,7 +154,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    if (globalBgAudioManager.paused) {
+      globalBgAudioManager.pause();
+      this.setData({
+        paused: globalBgAudioManager,
+        playStatusImage : '../../images/play.png'
+      })
+    }else{
+
+    }
+    
   },
 
   /**

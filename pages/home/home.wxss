@@ -1,26 +1,92 @@
 /* pages/home/home.wxss */
 .content{
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items:center; 
   height: 100%;
   width: 100%;
 }
-.cover_view{
+.play_control{
+  position: absolute;
+  display: block;
+  margin:2vw;
+  text-align: center;
+  transition-duration: 0.7s;
+  transition-property: all;
+  transition-timing-function: linear;
+}
+.play_control image{
+  width:100%;
+  filter: invert(100%);
+}
+
+.playbtn{
+  font-size: 14pt;
+  top: 40vh;
+  left: 42vw;
+  
+}
+.playbtn image{
+  width:16vw;
+  height: 16vw;
+}
+
+.pausedbtn{
+  font-size: 8pt;
+  top:85vh;
+  left: 45vw;
+  
+}
+.pausedbtn image{
+  width: 10vw;
+  height: 10vw;
+}
+
+.select_name{
+  position: fixed;
+  top:0;
+  height: 15%;
+  width: 100%;
+}
+.select_name_item{
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.select_music{
+  position: fixed;
+  z-index: -1;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+}
+.select_music_bgimg{
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.cover_view{
+  display: flex;
+  width:80%;
+  height: 80vw;
+  align-items: center;
+  justify-content: center;
+}
 .cover{
-  width:70%;
-  height: 70vw;
-  margin-left: auto;
-  margin-right: auto;
+  width:60%;
+  height: 16vw;
+  padding-bottom: 5vw;
 }
 
 .music_bg{
   position: fixed;
   height:100%;
   width: 100%;
-  filter:blur(20px) brightness(0.70);
+  filter:blur(0.5px) brightness(80%);
   z-index: -1;
 }
 .control{
@@ -28,8 +94,8 @@
   bottom: 0;
   height: 60px;
   width: 100%;
-  background-color: black;
   opacity: 0.8;
+  z-index:4;
 }
 
 .weui-flex__item{
