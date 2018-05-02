@@ -117,7 +117,7 @@ Page({
       paused: !status,
       playStatusImage: playStatusImage
     })
-    console.log(globalBgAudioManager.duration())
+    //console.log(globalBgAudioManager.duration())
     this.recordCurrentAudioInfo(musicInfo);
   },
   /**
