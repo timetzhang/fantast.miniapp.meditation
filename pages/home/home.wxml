@@ -18,23 +18,35 @@
         </swiper-item>
       </block>
     </swiper>
-    
-    <!--
-    <swiper style='width:100%;height:18%;' bindchange='changeMusic' display-multiple-items="3" circular='true'>
-      <block wx:for='{{musicData}}' wx:key="{{item.id}}">
-        <swiper-item class='cover_view'>
-          <text>{{item.name}}</text>
-        </swiper-item>
-      </block>
-    </swiper>
-    -->
   </view>
+  <!--ControlMusic-->
   <view class="play_control {{paused ? 'playbtn':'pausedbtn'}}">
     <image class='paused_icon' mode="widthFix" src='{{playStatusImage}}'  bindtap='playMusic'></image>
     <view>30:00</view>
   </view>
+  <!--showSetTimerValue-->
+  <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+  <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+    <view class="drawer_title align center">
+      自定义定时
+    </view>
+    <view class="drawer_content"> 
+      <picker-view indicator-style="height: 50px;" style="width: 100%; height: 180px;" value="{{value}}" bindchange="bindChange">
+        <picker-view-column>
+          <view wx:for="{{hours}}" class='align center' style="line-height: 50px" wx:key='{{item}}'>{{item}}小时</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{minutes}}" class='align center' style="line-height: 50px" wx:key='{{item}}'>{{item}}分钟</view>
+        </picker-view-column>
+      </picker-view>
+  </view>
+  <view class='drawer_btn'>
+    <view class="btn_item" bindtap="setClock" data-statu="cancel">取消</view>
+    <view class="btn_item" bindtap="setClock" data-statu="set">确定</view> 
+  </view>
   
-  
+  </view>
+  <!--setTimerNavControlValue-->
   <view class="control {{paused ? '':'control_hidden'}}">
     <view class='weui-flex' style='flex-direction:row;'>
       <view class='weui-flex__item'>
@@ -52,7 +64,7 @@
       <view>
       </view>
       <view class='weui-flex__item'>
-        <view class='control_item' bindtap='selectClock'>
+        <view class='control_item' bindtap='bindClockChange'> <!-- bindtap='selectClock'-->
           <image class='control_btn' src='../../images/clock.png'></image>
         </view>
       </view>
