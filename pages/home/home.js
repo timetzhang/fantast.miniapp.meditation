@@ -83,7 +83,9 @@ Page({
    */
   changeMusic:function(event){
     var index = event.detail.current;
-    globalBgAudioManager.pause();
+    if (globalBgAudioManager.paused != 'undefined' && globalBgAudioManager.paused != true) {
+      this.playTargetMusic(false);
+    }
     this.setData({
       playStatusImage: '../../images/play.png',
       currentName: index
