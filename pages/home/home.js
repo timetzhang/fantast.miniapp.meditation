@@ -55,6 +55,7 @@ Page({
             typeTitle: res.data[0].name
           })
         }
+        
     })
     
     /**
@@ -64,17 +65,18 @@ Page({
       var index = that.data.currentName + 1;
       that.playTargetMusic(false);
       if (that.data.repeatStatus){
-        if (index == that.datamusicData.length - 1){
+        if (index == that.data.musicData.length - 1){
           index = 0;
         }
         that.setData({
           playStatusImage: '../../images/play.png',
           currentName: index
         })
-        that.playTargetMusic(true);
-      }else{
-        that.playTargetMusic(true);
+        console.log('12')
       }
+      var time = setTimeout(function () {
+        that.playTargetMusic(true);
+      }, 300)
     })
     /**
      * 音频播放进度更新
