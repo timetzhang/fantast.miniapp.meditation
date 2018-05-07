@@ -22,7 +22,7 @@ Page({
     current:0,
     paused:true,
     playStatusImage:'../../images/play.png',
-    repeatStatus:true,
+    repeatStatus:true,//列表循环
     repeatStatusImage:'../../images/repeat.png',
     timerValue: 0,
     selectTimeArray:[],
@@ -34,6 +34,7 @@ Page({
     minutes:minutes,
     minute:1,
     timeValue: [0,1],
+    playCurrentTime:'00:00'
   },
 
   /**
@@ -55,6 +56,57 @@ Page({
           })
         }
     })
+    
+    /**
+   * 音频自然结束更新
+   */
+    globalBgAudioManager.onEnded(function () {
+      var index = that.data.currentName + 1;
+      that.playTargetMusic(false);
+      if (that.data.repeatStatus){
+        if (index == that.datamusicData.length - 1){
+          index = 0;
+        }
+        that.setData({
+          playStatusImage: '../../images/play.png',
+          currentName: index
+        })
+        that.playTargetMusic(true);
+      }else{
+        that.playTargetMusic(true);
+      }
+    })
+    /**
+     * 音频播放进度更新
+     */
+    globalBgAudioManager.onTimeUpdate(function(){
+      var time = that.formatSeconds(globalBgAudioManager.duration - globalBgAudioManager.currentTime);
+      if(time != '0:0'){
+        that.setData({
+          playCurrentTime: time
+        })
+      }
+    })
+
+    /**
+     * 音频暂停
+     */
+    globalBgAudioManager.onPause(function(){
+      currentMusicInfo.playCurrentTime = globalBgAudioManager.duration - globalBgAudioManager.currentTime;
+      that.setData({
+        playCurrentTime: that.formatSeconds(currentMusicInfo.playCurrentTime)
+      })
+      //console.log(currentMusicInfo.playCurrentTime)
+    })
+  },
+  /**
+   * 时间格式转换
+   */
+  formatSeconds(value){
+    var min = Math.floor(value / 60);
+    //var second = parseInt(value % 60);
+    var second = Math.floor(value % 60) < 10 ? '0' + Math.floor(value % 60) : Math.floor(value % 60);
+    return min+':'+second;
   },
   /**
    * 初始化播放器
@@ -63,7 +115,6 @@ Page({
     const page = this;
     const self = globalBgAudioManager;
     const option = {
-      
     };
   },
   /**
@@ -83,8 +134,10 @@ Page({
    */
   changeMusic:function(event){
     var index = event.detail.current;
-    if (globalBgAudioManager.paused != 'undefined' && globalBgAudioManager.paused != true) {
+    
+    if (globalBgAudioManager.paused == false) {
       this.playTargetMusic(false);
+      console.log(globalBgAudioManager.paused)
     }
     this.setData({
       playStatusImage: '../../images/play.png',
@@ -111,8 +164,8 @@ Page({
    * 播放或者暂停播放
    */
   playMusic: function () {
-    var status = this.data.paused
-    this.playTargetMusic(status);
+    globalBgAudioManager.pause();
+    this.playTargetMusic(this.data.paused);
   }, 
   /**
    * 定时器选择器
@@ -230,7 +283,7 @@ Page({
     var that = this;
     var showValue = timeValue;
     timer = setTimeout(function () {
-      if (globalBgAudioManager.paused != 'undefined' && globalBgAudioManager.paused != true){
+      if (globalBgAudioManager.paused == false){
         that.playTargetMusic(false);
       }
     }, timeValue)
@@ -246,10 +299,13 @@ Page({
   /**
    * 播放目标音乐
    */
+  setMusic(){
+    
+  },
   playTargetMusic:function(status){
     var playStatusImage = ''
     const musicInfo = this.data.musicData[this.data.current]
-    if (musicInfo.id != currentMusicInfo.id){
+    if (musicInfo.id != currentMusicInfo.id) {
       globalBgAudioManager.title = musicInfo.name
       globalBgAudioManager.epname = musicInfo.name
       globalBgAudioManager.singer = musicInfo.composer
@@ -294,6 +350,7 @@ Page({
       repeatStatusImage: repeatStatusImage
     })
   },
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

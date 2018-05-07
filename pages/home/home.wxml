@@ -22,7 +22,7 @@
   <!--ControlMusic-->
   <view class="play_control {{paused ? 'playbtn':'pausedbtn'}}">
     <image class='paused_icon' mode="widthFix" src='{{playStatusImage}}'  bindtap='playMusic'></image>
-    <view>30:00</view>
+    <view>{{playCurrentTime}}</view>
   </view>
   <!--showSetTimerValue-->
   <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
