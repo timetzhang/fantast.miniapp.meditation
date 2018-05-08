@@ -301,9 +301,6 @@ Page({
   /**
    * 播放目标音乐
    */
-  setMusic(){
-    
-  },
   playTargetMusic:function(status){
     var playStatusImage = ''
     const musicInfo = this.data.musicData[this.data.current]

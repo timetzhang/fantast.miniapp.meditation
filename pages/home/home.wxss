@@ -61,6 +61,7 @@
   width: 100%;
 }
 .select_name_item{
+  font-size: 14pt;
   display: flex;
   align-items: center;
   justify-content: center;
