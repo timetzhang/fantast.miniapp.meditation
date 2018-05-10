@@ -14,6 +14,13 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const formatSeconds = value =>{
+  var min = Math.floor(value / 60);
+  var second = Math.floor(value % 60) < 10 ? '0' + Math.floor(value % 60) : Math.floor(value % 60);
+  return min + ':' + second;
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  formatSeconds: formatSeconds
 }

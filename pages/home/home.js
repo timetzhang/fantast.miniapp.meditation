@@ -2,6 +2,7 @@
 let globalBgAudioManager = getApp().globalData.backgroundAudioManager;
 var currentMusicInfo = getApp().globalData.currentMusicInfo;
 var timer;
+var util = require('../../utils/util.js');
 const hours=[];
 const minutes = [];
 for(let i = 0; i <= 12; i++){
@@ -33,7 +34,6 @@ Page({
     hour:0,
     minutes:minutes,
     minute:1,
-    timeValue: [0,1],
     playCurrentTime:'00:00'
   },
 
@@ -72,7 +72,6 @@ Page({
           playStatusImage: '../../images/play.png',
           currentName: index
         })
-        console.log('12')
       }
       var time = setTimeout(function () {
         that.playTargetMusic(true);
@@ -82,7 +81,7 @@ Page({
      * 音频播放进度更新
      */
     globalBgAudioManager.onTimeUpdate(function(){
-      var time = that.formatSeconds(globalBgAudioManager.duration - globalBgAudioManager.currentTime);
+      var time = util.formatSeconds(globalBgAudioManager.duration - globalBgAudioManager.currentTime);
       if(time != '0:0'){
         that.setData({
           playCurrentTime: time
@@ -96,19 +95,9 @@ Page({
     globalBgAudioManager.onPause(function(){
       currentMusicInfo.playCurrentTime = globalBgAudioManager.duration - globalBgAudioManager.currentTime;
       that.setData({
-        playCurrentTime: that.formatSeconds(currentMusicInfo.playCurrentTime)
+        playCurrentTime: util.formatSeconds(currentMusicInfo.playCurrentTime)
       })
-      //console.log(currentMusicInfo.playCurrentTime)
     })
-  },
-  /**
-   * 时间格式转换
-   */
-  formatSeconds(value){
-    var min = Math.floor(value / 60);
-    //var second = parseInt(value % 60);
-    var second = Math.floor(value % 60) < 10 ? '0' + Math.floor(value % 60) : Math.floor(value % 60);
-    return min+':'+second;
   },
   /**
    * 初始化播放器
@@ -139,7 +128,6 @@ Page({
     
     if (globalBgAudioManager.paused == false) {
       this.playTargetMusic(false);
-      console.log(globalBgAudioManager.paused)
     }
     this.setData({
       playStatusImage: '../../images/play.png',
@@ -323,7 +311,6 @@ Page({
       paused: !status,
       playStatusImage: playStatusImage
     })
-    //console.log(globalBgAudioManager.duration())
     this.recordCurrentAudioInfo(musicInfo);
   },
   /**
@@ -331,7 +318,6 @@ Page({
    */
   recordCurrentAudioInfo(musicInfo){
     currentMusicInfo = musicInfo;
-    //console.log(currentMusicInfo);
   },
   /**
    * 循环状态
